@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go Concurrency Patterns: Goroutines and Channels</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="/static/css/prose.compiled.css" rel="stylesheet">
+    
+</head>
+<body class="site-body">
+    <nav class="site-nav">
+        <div class="site-container">
+            <a class="site-nav-link" href="/index.html">Home</a>
+            
+            <a class="site-nav-link" href="//tech/index.html">Tech</a>
+            
+            <a class="site-nav-link" href="//philosophy/index.html">Philosophy</a>
+            
+            <a class="site-nav-link" href="//food/index.html">Food</a>
+            
+        </div>
+    </nav>
+
+    
+        
+            <div class="hero-wrapper boxed">
+                <img class="hero-image" src="/static/img/header.png" alt="Header Image">
+                <div class="hero-title-box">
+                    <h1 class="hero-title">Go Concurrency Patterns: Goroutines and Channels</h1>
+                </div>
+            </div>
+            <div class="site-container">
+                <main>
+                    
+<p>Go's built-in concurrency primitives, goroutines and channels, offer a powerful and elegant way to write concurrent programs. Unlike traditional thread-based concurrency, goroutines are lightweight and managed by the Go runtime, while channels provide a safe and synchronized way for goroutines to communicate. This post explores fundamental concurrency patterns in Go.</p>
+<h2>Goroutines: Lightweight Threads</h2>
+<p>A goroutine is a lightweight thread of execution. You can launch a goroutine by simply prefixing a function call with the <code>go</code> keyword:</p>
+<pre><code class="language-go">func doSomething() {
+    // ...
+}
+
+func main() {
+    go doSomething()
+    // ...
+}
+</code></pre>
+<h2>Channels: Communicating Sequential Processes</h2>
+<p>Channels are the conduits through which goroutines communicate. They allow you to send and receive values with a guarantee of synchronization.</p>
+<pre><code class="language-go">func worker(id int, jobs &lt;-chan int, results chan&lt;- int) {
+    for j := range jobs {
+        fmt.Printf(&quot;Worker %d started job %d\n&quot;, id, j)
+        time.Sleep(time.Second) // Simulate work
+        fmt.Printf(&quot;Worker %d finished job %d\n&quot;, id, j)
+        results &lt;- j * 2
+    }
+}
+
+func main() {
+    jobs := make(chan int, 100)
+    results := make(chan int, 100)
+
+    for w := 1; w &lt;= 3; w++ {
+        go worker(w, jobs, results)
+    }
+
+    for j := 1; j &lt;= 5; j++ {
+        jobs &lt;- j
+    }
+    close(jobs)
+
+    for a := 1; a &lt;= 5; a++ {
+        &lt;-results
+    }
+}
+</code></pre>
+<p>This example demonstrates how multiple workers (goroutines) can process jobs sent through a channel and send results back through another.</p>
+<h2>Common Patterns</h2>
+<ul>
+<li><strong>Worker Pools</strong>: Distribute tasks among a fixed number of goroutines.</li>
+<li><strong>Fan-out/Fan-in</strong>: Distribute work to multiple goroutines and collect their results.</li>
+<li><strong>Select Statement</strong>: Handle multiple channel operations simultaneously.</li>
+</ul>
+<p>Go's concurrency model simplifies the development of highly performant and scalable applications.</p>
+
+                </main>
+            </div>
+        
+
+    
+
+    <div class="site-container">
+        
+    
+        <div class="mt-8">
+            
+            
+                
+    <div class="space-y-8">
+        
+        
+            <div>
+                <h3 class="text-lg font-bold mb-2">Recent in this section</h3>
+                <ul>
+                    
+                        <li><a href="../building-kubernetes-operators-with-go-dc7df69d222e/index.html">Building Kubernetes Operators with Go</a></li>
+                    
+                        <li><a href="../serverless-architectures:-beyond-functions-as-a-service-28efbfe00c9e/index.html">Serverless Architectures: Beyond Functions as a Service</a></li>
+                    
+                        <li><a href="../dockerizing-your-microservices:-a-practical-guide-e4b9a3761828/index.html">Dockerizing Your Microservices: A Practical Guide</a></li>
+                    
+                        <li><a href="../microservices-architecture:-design-principles-2ce9b65c67ab/index.html">Microservices Architecture: Design Principles</a></li>
+                    
+                        <li><a href="../python-for-data-science:-a-comprehensive-guide-4199ee4446d1/index.html">Python for Data Science: A Comprehensive Guide</a></li>
+                    
+                </ul>
+            </div>
+        
+        
+        
+            <div>
+                <h3 class="text-lg font-bold mb-2">Recent in all sections</h3>
+                <ul>
+                    
+                        <li><a href="../exploring-indian-vegetarian-cuisine:-a-world-of-spices-3a414d03f994/index.html">Exploring Indian Vegetarian Cuisine: A World of Spices</a></li>
+                    
+                        <li><a href="../the-secret-to-perfect-italian-pasta:-a-simple-guide-618896cdf109/index.html">The Secret to Perfect Italian Pasta: A Simple Guide</a></li>
+                    
+                        <li><a href="../mexican-vegan-delights:-flavor-without-compromise-fad2dd46670a/index.html">Mexican Vegan Delights: Flavor Without Compromise</a></li>
+                    
+                        <li><a href="../thai-street-food:-a-culinary-adventure-97657889df1a/index.html">Thai Street Food: A Culinary Adventure</a></li>
+                    
+                        <li><a href="../vegan-italian-cuisine:-a-plant-based-feast-e4d08c797a21/index.html">Vegan Italian Cuisine: A Plant-Based Feast</a></li>
+                    
+                </ul>
+            </div>
+        
+    </div>
+
+            
+        </div>
+    
+
+        
+    
+
+<div class="google-custom-search">
+    <script async src="https://cse.google.com/cse.js?cx=94ad2c0b147c141fa">
+    </script>
+    <div class="gcse-search"></div>
+</div>
+
+
+    </div>
+</body>
+</html>
